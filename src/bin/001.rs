@@ -1,14 +1,13 @@
-use competitive_tools_rust::d;
+//use competitive_tools_rust::d;
 use competitive_tools_rust::io::*;
-use std::iter::once;
+use competitive_tools_rust::search::bound;
 
 fn main() {
     let (n, l): (usize, usize) = parse_tuple2();
     let k: usize = parse_line();
     let a: Vec<usize> = parse_values(n);
-    for i in 0..l {
-        d!(i, judge(i, k, l, &a));
-    }
+    let (_, ans) = bound(l as isize, 1, |i| judge(i as usize, k, l, &a));
+    println!("{}", ans);
 }
 
 fn judge(score: usize, k: usize, l: usize, a: &[usize]) -> bool {
