@@ -1,0 +1,15 @@
+[package]
+name = "typical90"
+version = "0.1.0"
+authors = ["UseK <use.k.james@gmail.com>"]
+edition = "2018"
+
+# dependencies added to new project
+[dependencies]
+# proconio = "*"
+# competitive = { git = "https://github.com/tanakh/competitive-rs.git" }
+competitive-tools-rust = { git = "https://github.com/UseK/competitive-tools-rust.git" }
+
+[profile.release]
+lto = true
+panic = 'abort'
