@@ -3,7 +3,7 @@
 [[package]]
 name = "competitive-tools-rust"
 version = "0.2.3"
-source = "git+https://github.com/UseK/competitive-tools-rust.git#1dd651177bc1580c459bbe6bf1bdf1d8bcee6d20"
+source = "git+https://github.com/UseK/competitive-tools-rust.git#1f4b6c60ea98832290f61771beae52e5dd989d94"
 
 [[package]]
 name = "typical90"
