@@ -4,30 +4,37 @@ use competitive_tools_rust::io::*;
 fn main() {
     let (n, k): (usize, usize) = parse_tuple2();
     let s: Vec<char> = parse_line::<String>().chars().collect();
-    let mut dp: Vec<Vec<String>> = vec![vec!["".to_string(); n]; k];
-    let mut current_min = s[0].to_string();
-    for j in 0..n {
-        if s[j].to_string() < current_min {
-            current_min = s[j].to_string();
-        }
-        dp[0][j] = current_min.clone();
-    }
 
-    for i in 1..k {
-        let mut prev = dp[i - 1][i - 1].clone();
-        //println!("{}", prev);
-        prev.push(s[i]);
-        //println!("{}", prev);
-        dp[i][i] = prev;
-        for j in i + 1..n {
-            let mut added = dp[i - 1][j].clone();
-            added.push(s[j]);
-            if added < dp[i][j - 1] {
-                dp[i][j] = added;
-            } else {
-                dp[i][j] = dp[i][j - 1].clone();
+    let most_left_indices = gen_most_left_indices(n, &s);
+
+    let mut current_ind = 0;
+    let ans: String = (1..=k)
+        .rev()
+        .map(|current_k| {
+            d!(current_k);
+            let ans_char = ('a'..='z')
+                .find(|&c| n - most_left_indices[c as usize - 97][current_ind] > current_k)
+                .unwrap();
+            d!(current_k, ans_char, current_ind);
+            current_ind = most_left_indices[ans_char as usize - 97][current_ind] + 1;
+            d!(current_k, ans_char, current_ind);
+            ans_char
+        })
+        .collect();
+    println!("{}", ans);
+}
+
+fn gen_most_left_indices(n: usize, s: &[char]) -> Vec<Vec<usize>> {
+    let mut most_left_indices: Vec<Vec<usize>> = vec![vec![n; n]; 26];
+    for c in 'a'..='z' {
+        let most_left_ind = &mut most_left_indices[c as usize - 97];
+        let mut current_ind = n;
+        for s_ind in (0..n).rev() {
+            if s[s_ind] == c {
+                current_ind = s_ind
             }
+            most_left_ind[s_ind] = current_ind;
         }
     }
-    dp.iter().for_each(|item| println!("{:?}", item));
+    most_left_indices
 }
