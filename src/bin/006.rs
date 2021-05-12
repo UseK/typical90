@@ -1,4 +1,4 @@
-use competitive_tools_rust::d;
+//use competitive_tools_rust::d;
 use competitive_tools_rust::io::*;
 
 fn main() {
@@ -11,13 +11,13 @@ fn main() {
     let ans: String = (1..=k)
         .rev()
         .map(|current_k| {
-            d!(current_k);
+            // d!(current_k);
             let ans_char = ('a'..='z')
-                .find(|&c| n - most_left_indices[c as usize - 97][current_ind] > current_k)
+                .find(|&c| n - most_left_indices[c as usize - 97][current_ind] >= current_k)
                 .unwrap();
-            d!(current_k, ans_char, current_ind);
+            // d!(current_k, ans_char, current_ind);
             current_ind = most_left_indices[ans_char as usize - 97][current_ind] + 1;
-            d!(current_k, ans_char, current_ind);
+            // d!(current_k, ans_char, current_ind);
             ans_char
         })
         .collect();
