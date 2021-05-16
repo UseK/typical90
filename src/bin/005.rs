@@ -1,40 +1,25 @@
-use competitive_tools_rust::d;
+// use competitive_tools_rust::d;
 use competitive_tools_rust::io::*;
+
+const LAW: usize = 1_000_000_007;
 
 fn main() {
     let (n, b, k): (usize, usize, usize) = parse_tuple3();
     let c: Vec<usize> = parse_values(k);
-    let left_base = 10usize.pow((n - 1) as u32);
-    let left = left_base + b - (left_base % b);
-    let right_base = 10usize.pow(n as u32);
-    let right = right_base - (right_base % b);
-    let ans = (left..=right)
-        .step_by(b)
-        .filter(|&i| all_digit_included(i, &c))
-        .count();
-    println!("{}", ans);
-}
-
-fn all_digit_included(i: usize, numbers: &[usize]) -> bool {
-    let mut i = i;
-    while i != 0 {
-        if numbers.contains(&(i % 10)) {
-            i /= 10;
-        } else {
-            return false;
+    let mut dp: Vec<Vec<usize>> = vec![vec![0; b]; n];
+    for &c_item in &c {
+        dp[0][c_item % b] += 1;
+    }
+    for i in 1..n {
+        for j in 0..b {
+            for &c_item in &c {
+                let new_mod = (j * 10 + c_item) % b;
+                // d!(i, j, c_item, new_mod, dp[i - 1][j]);
+                dp[i][new_mod] += dp[i - 1][j];
+                dp[i][new_mod] %= LAW;
+            }
         }
     }
-    true
-}
-
-#[cfg(test)]
-mod tests {
-    use crate::all_digit_included;
-
-    #[test]
-    fn test() {
-        let numbers = [1, 4, 9];
-        assert!(!all_digit_included(987, &numbers));
-        //assert!(all_digit_included(994, &numbers));
-    }
+    // dp.iter().for_each(|item| println!("{:?}", item));
+    println!("{}", dp[n - 1][0]);
 }
