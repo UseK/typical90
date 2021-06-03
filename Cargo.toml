@@ -9,6 +9,7 @@ edition = "2018"
 # proconio = "*"
 # competitive = { git = "https://github.com/tanakh/competitive-rs.git" }
 competitive-tools-rust = { git = "https://github.com/UseK/competitive-tools-rust.git" }
+itertools = "0"
 
 [profile.release]
 lto = true
