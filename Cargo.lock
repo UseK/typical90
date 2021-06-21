@@ -3,7 +3,7 @@
 [[package]]
 name = "competitive-tools-rust"
 version = "0.2.3"
-source = "git+https://github.com/UseK/competitive-tools-rust.git#1f4b6c60ea98832290f61771beae52e5dd989d94"
+source = "git+https://github.com/UseK/competitive-tools-rust.git#8a0390474877d61a2b0c2c87970890d4df8150d2"
 
 [[package]]
 name = "either"
@@ -13,9 +13,9 @@ checksum = "e78d4f1cc4ae33bbfc157ed5d5a5ef3bc29227303d595861deb238fcec4e9457"
 
 [[package]]
 name = "itertools"
-version = "0.10.0"
+version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "37d572918e350e82412fe766d24b15e6682fb2ed2bbe018280caa810397cb319"
+checksum = "69ddb889f9d0d08a67338271fa9b62996bc788c7796a5c18cf057420aaed5eaf"
 dependencies = [
  "either",
 ]

@@ -1,15 +1,8 @@
 use competitive_tools_rust::io::*;
-
-fn gcd(a: usize, b: usize) -> usize {
-    if b == 0 {
-        a
-    } else {
-        gcd(b, a % b)
-    }
-}
+use competitive_tools_rust::math::Gcd;
 
 fn main() {
     let (a, b, c): (usize, usize, usize) = parse_tuple3();
-    let base = gcd(c, gcd(a, b));
+    let base = a.gcd(b).gcd(c);
     println!("{}", a / base + b / base + c / base - 3);
 }
