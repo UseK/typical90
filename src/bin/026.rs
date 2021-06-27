@@ -37,6 +37,17 @@ impl BipartiteGraph for Vec<Vec<usize>> {
 
 impl Tree for Vec<Vec<usize>> {}
 
+fn ans(list: Vec<usize>, n: usize) {
+    println!(
+        "{}",
+        list.iter()
+            .take(n / 2)
+            .map(|i| (i + 1).to_string())
+            .collect::<Vec<String>>()
+            .join(" ")
+    );
+}
+
 fn main() {
     let n: usize = parse_line();
     let mut adjacency_list: Vec<Vec<usize>> = vec![vec![]; n];
@@ -46,27 +57,10 @@ fn main() {
         adjacency_list[b - 1].push(a - 1);
         // println!("{:?}", adjacency_list);
     }
-    // adjacency_list
-    //     .iter()
-    //     .for_each(|item| println!("{:?}", item));
     let (x, y) = adjacency_list.bi_partition();
     if x.len() <= y.len() {
-        println!(
-            "{}",
-            y.iter()
-                .take(n / 2)
-                .map(|i| i.to_string())
-                .collect::<Vec<String>>()
-                .join(" ")
-        );
+        ans(y, n);
     } else {
-        println!(
-            "{}",
-            x.iter()
-                .take(n / 2)
-                .map(|i| (i + 1).to_string())
-                .collect::<Vec<String>>()
-                .join(" ")
-        );
+        ans(x, n);
     }
 }
