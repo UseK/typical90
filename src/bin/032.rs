@@ -24,12 +24,13 @@ fn main() {
         let is_ok = pattern
             .iter()
             .tuple_windows::<(&usize, &usize)>()
+            // .inspect(|t| d!(t))
             .all(|(&a, &b)| !ng_matrix[a][b]);
         if is_ok {
             let score = pattern
                 .iter()
                 .enumerate()
-                .fold(0, |acc, (ind, &p_item)| acc + a[ind][p_item]);
+                .fold(0, |acc, (ind, &p_item)| acc + a[p_item][ind]);
             // d!(score);
             let current = min_score.unwrap_or(score);
             min_score = Some(current.min(score));
