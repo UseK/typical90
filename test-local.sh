@@ -5,4 +5,4 @@ cargo build --release --bin "$1"
 mkdir -p ./testcase/"$1"/my_ans
 ls "./testcase/$1/in/" | xargs -I {} sh -c "./target/release/$1 < ./testcase/$1/in/{} > ./testcase/$1/my_ans/{}; echo generated ./testcase/$1/my_ans/{}"
 # find "./testcase/$1/in/" -type f -name "*.txt"| xargs -I {} sh -c "./target/debug/$1 < {} > ./testcase/$1/my_ans"
-ls "./testcase/$1/in/" | xargs -I {} sh -c "echo Difference in {}; diff --strip-trailing-cr ./testcase/$1/out/{} ./testcase/$1/my_ans/{}; echo;"
+ls "./testcase/$1/in/" | xargs -I {} sh -c "echo Difference in {}; diff --strip-trailing-cr ./testcase/$1/my_ans/{} ./testcase/$1/out/{}; echo;"
