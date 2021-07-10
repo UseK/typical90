@@ -1,5 +1,6 @@
-use competitive_tools_rust::d;
+// use competitive_tools_rust::d;
 use competitive_tools_rust::io::{parse_line, parse_tuple2};
+use std::collections::VecDeque;
 
 fn main() {
     let (h, w): (usize, usize) = parse_tuple2();
@@ -10,12 +11,18 @@ fn main() {
         .collect();
     surround_wall(&mut maze);
     let maze = maze;
-    maze.iter().for_each(|item| println!("{:?}", item));
+    // maze.iter().for_each(|item| println!("{:?}", item));
 
     let mut counter: Vec<Vec<usize>> = vec![vec![usize::MAX; w + 2]; h + 2];
-    let mut togo_stock: Vec<ToGo> = ToGo::new_all_directions(start_r, start_c, 0);
+    // let mut togo_stock: Vec<ToGo> = ToGo::new_all_directions(start_r, start_c, 0);
+    let mut togo_queue: VecDeque<ToGo> = VecDeque::new();
+    togo_queue.append(
+        &mut ToGo::new_all_directions(start_r, start_c, 0)
+            .into_iter()
+            .collect(),
+    );
     loop {
-        let togo = togo_stock.pop().unwrap();
+        let togo = togo_queue.pop_front().unwrap();
         counter[togo.r][togo.c] = counter[togo.r][togo.c].min(togo.count);
 
         let (next_r, next_c) = match togo.direction {
@@ -25,24 +32,24 @@ fn main() {
             Direction::Right => (togo.r, togo.c + 1),
         };
         if (next_r, next_c) == (target_r, target_c) {
-            d!(next_r, next_c, togo);
+            // d!(next_r, next_c, togo);
             println!("{}", togo.count);
             return;
         }
         if maze[next_r][next_c] {
-            let mut next_togo_list = match togo.direction {
+            let next_togo_list = match togo.direction {
                 Direction::Up => ToGo::new_horizontal_directions(next_r, next_c, togo.count + 1),
                 Direction::Down => ToGo::new_horizontal_directions(next_r, next_c, togo.count + 1),
                 Direction::Left => ToGo::new_vertical_directions(next_r, next_c, togo.count + 1),
                 Direction::Right => ToGo::new_vertical_directions(next_r, next_c, togo.count + 1),
             };
-            togo_stock.append(&mut next_togo_list);
-            togo_stock.push(ToGo::new(next_r, next_c, togo.direction, togo.count));
+            togo_queue.push_back(ToGo::new(next_r, next_c, togo.direction, togo.count));
+            togo_queue.append(&mut next_togo_list.into_iter().collect());
 
-            println!("{:?}", togo);
-            println!("----------");
-            togo_stock.iter().for_each(|item| println!("{:?}", item));
-            println!();
+            // println!("{:?}", togo);
+            // println!("----------");
+            // togo_queue.iter().for_each(|item| println!("{:?}", item));
+            // println!();
         }
     }
 }
