@@ -16,22 +16,18 @@ fn main() {
     let mut count = 0;
     for i in 0..46 {
         for j in 0..46 {
-            if i + j == 0 {
-                continue;
-            };
-            let remain = if i + j <= 46 {
-                46 - (i + j)
-            } else {
-                92 - (i + j)
-            };
-            dbg!(i, j, remain);
-            count += a_group[i] * b_group[j] * c_group[remain];
+            for k in 0..46 {
+                if (i + j + k) % 46 == 0 {
+                    let adder = a_group[i] * b_group[j] * c_group[k];
+                    count += adder;
+                }
+            }
         }
     }
     println!("{}", count);
 }
 
-fn mod_46_grouped(x: &Vec<usize>) -> Vec<usize> {
+fn mod_46_grouped(x: &[usize]) -> Vec<usize> {
     let mut grouped: Vec<usize> = vec![0; 46];
     for i in x {
         grouped[i % 46] += 1;
