@@ -12,11 +12,7 @@ fn main() {
         .collect();
     surround_wall(&mut maze);
     let maze = maze;
-    // maze.iter().for_each(|item| println!("{:?}", item));
-
-    let mut already: Vec<Vec<bool>> = vec![vec![false; w + 2]; h + 2];
-    // let mut togo_stock: Vec<ToGo> = ToGo::new_all_directions(start_r, start_c, 0);
-    // let mut togo_queue: VecDeque<ToGo> = VecDeque::new();
+    let mut counter: Vec<Vec<usize>> = vec![vec![usize::MAX; w + 2]; h + 2];
     let mut togo_queue: BinaryHeap<Reverse<ToGo>> = BinaryHeap::new();
     togo_queue.append(
         &mut ToGo::new_all_directions(start_r, start_c, 0)
@@ -25,7 +21,6 @@ fn main() {
             .collect(),
     );
     loop {
-        // let togo = togo_queue.pop_front().unwrap();
         let Reverse(togo) = togo_queue.pop().unwrap();
         // println!("{:?}", togo);
         let (next_r, next_c) = match togo.direction {
@@ -35,14 +30,13 @@ fn main() {
             Direction::Right => (togo.r, togo.c + 1),
         };
         if (next_r, next_c) == (target_r, target_c) {
-            // d!(next_r, next_c, togo);
             println!("{}", togo.count);
             return;
         }
-        if already[next_r][next_c] {
+        if counter[next_r][next_c] < togo.count {
             continue;
         } else {
-            already[next_r][next_c] = true;
+            counter[next_r][next_c] = togo.count;
         }
         if maze[next_r][next_c] {
             togo_queue.push(Reverse(ToGo::new(
@@ -58,11 +52,6 @@ fn main() {
                 Direction::Right => ToGo::new_vertical_directions(next_r, next_c, togo.count + 1),
             };
             togo_queue.append(&mut next_togo_list.into_iter().map(Reverse).collect());
-
-            // println!("{:?}", togo);
-            // println!("----------");
-            // togo_queue.iter().for_each(|item| println!("{:?}", item));
-            // println!();
         }
     }
 }
