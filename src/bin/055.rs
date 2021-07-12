@@ -4,13 +4,12 @@ use itertools::Itertools;
 fn main() {
     let (n, p, q): (usize, usize, usize) = parse_tuple3();
     let a: Vec<usize> = parse_values(n);
-    let ans = a
-        .iter()
-        .combinations(5)
-        .filter(|pattern| {
-            let remainder = pattern.iter().fold(1, |acc, &&p_item| (acc * p_item) % p);
-            remainder == q
-        })
-        .count();
+    let mut ans = 0;
+    a.into_iter().combinations(5).for_each(|pattern| {
+        let remainder = pattern.into_iter().reduce(|acc, p_item| (acc * p_item) % p);
+        if remainder.unwrap() == q {
+            ans += 1;
+        }
+    });
     println!("{}", ans);
 }
