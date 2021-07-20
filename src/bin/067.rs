@@ -1,34 +1,4 @@
-use std::io;
-
-pub fn parse_line<T: std::str::FromStr>() -> T {
-    let mut s = String::new();
-    io::stdin().read_line(&mut s).ok();
-    s.trim().parse().ok().unwrap()
-}
-
-pub fn parse_values<T: std::str::FromStr>(n: usize) -> Vec<T> {
-    let line = parse_line::<String>();
-    let mut split = line.split_whitespace();
-    let mut values = Vec::with_capacity(n);
-    for _ in 0..n {
-        let v = split.next().unwrap().parse::<T>().ok().unwrap();
-        values.push(v);
-    }
-    values
-}
-
-pub fn parse_tuple2<T1, T2>() -> (T1, T2)
-where
-    T1: std::str::FromStr,
-    T2: std::str::FromStr,
-{
-    let line: String = parse_line();
-    let mut split = line.split_whitespace();
-    (
-        split.next().unwrap().parse::<T1>().ok().unwrap(),
-        split.next().unwrap().parse::<T2>().ok().unwrap(),
-    )
-}
+use competitive_tools_rust::io::parse_tuple2;
 
 fn main() {
     let (n, k): (String, usize) = parse_tuple2();
