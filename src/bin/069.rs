@@ -18,7 +18,7 @@ fn main() {
         return;
     }
 
-    println!("{}", k * (k - 1) * (k - 2).mod_pow(n - 2, LAW) % LAW);
+    println!("{}", k * (k - 1) % LAW * (k - 2).mod_pow(n - 2, LAW) % LAW);
 }
 
 trait ModPow {
@@ -61,6 +61,13 @@ mod tests {
         let b = 2;
         let exp = 10;
         assert_eq!(b.mod_pow(exp, 5), 4);
+    }
+
+    #[test]
+    fn test_mod_pow_in_small_case2() {
+        let b = 2;
+        let exp = 4;
+        assert_eq!(b.mod_pow(exp, 5), 1);
     }
 
     #[test]
