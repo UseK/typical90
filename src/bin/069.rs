@@ -17,10 +17,14 @@ fn main() {
         return;
     }
 
-    let mut acc = k * (k - 1);
-    let k_minus_2 = k - 2;
-    for _ in 2..n {
-        acc = (acc * k_minus_2) % LAW;
+    let exp_part = naive_modular_exponentiation(k - 2, n - 2, LAW);
+    println!("{}", k * (k - 1) * exp_part % LAW);
+}
+
+fn naive_modular_exponentiation(b: usize, e: usize, m: usize) -> usize {
+    let mut exp = 1;
+    for _ in 0..e {
+        exp = (exp * b) % m;
     }
-    println!("{}", acc);
+    exp
 }
