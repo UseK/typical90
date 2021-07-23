@@ -17,14 +17,53 @@ fn main() {
         return;
     }
 
-    let exp_part = naive_modular_exponentiation(k - 2, n - 2, LAW);
-    println!("{}", k * (k - 1) * exp_part % LAW);
+    println!("{}", k * (k - 1) * (k - 2).mod_pow(n - 2, LAW) % LAW);
 }
 
-fn naive_modular_exponentiation(b: usize, e: usize, m: usize) -> usize {
-    let mut exp = 1;
-    for _ in 0..e {
-        exp = (exp * b) % m;
+trait ModPow {
+    /// Returns Modular Exponentiation  with
+    fn mod_pow(&self, exp: Self, m: Self) -> Self;
+}
+
+impl ModPow for usize {
+    fn mod_pow(&self, exp: Self, m: Self) -> Self {
+        let mut acc = 1;
+        for _ in 0..exp {
+            acc = (acc * *self) % m;
+        }
+        acc
     }
-    exp
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::ModPow;
+    const LAW: usize = 10usize.pow(9) + 7;
+
+    fn naive_modular_exponentiation(b: usize, e: usize, m: usize) -> usize {
+        let mut exp = 1;
+        for _ in 0..e {
+            exp = (exp * b) % m;
+        }
+        exp
+    }
+
+    #[test]
+    fn test_mod_pow_in_testcase() {
+        let b = 2019;
+        let exp = 615;
+        assert_eq!(b.mod_pow(exp, LAW), 492000830);
+        assert_eq!(naive_modular_exponentiation(b, exp, LAW), 492000830);
+    }
+
+    #[test]
+    fn test_mod_pow_in_all_pattern() {
+        for b in 0..100 {
+            for exp in 0..100 {
+                for m in 2..100 {
+                    assert_eq!(b.mod_pow(exp, m), naive_modular_exponentiation(b, exp, m));
+                }
+            }
+        }
+    }
 }
