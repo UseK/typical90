@@ -27,10 +27,10 @@ fn operate<R>(sums: &[Option<usize>], r: R, v: usize)
 where
     R: Iterator<Item = usize>,
 {
-    let mut current = v;
+    let mut current: isize = v as isize;
     for i in r {
         if let Some(sum) = sums[i] {
-            current = sum - current;
+            current = sum as isize - current;
             // d!(i, sums[i], current);
         } else {
             println!("Ambiguous");
