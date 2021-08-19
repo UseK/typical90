@@ -2,8 +2,8 @@
 # It is not intended for manual editing.
 [[package]]
 name = "competitive-tools-rust"
-version = "0.2.3"
-source = "git+https://github.com/UseK/competitive-tools-rust.git#a0fed64f3a30fd800035215f49f06d718669fd4f"
+version = "0.5.0"
+source = "git+https://github.com/UseK/competitive-tools-rust.git#82cbed7445eed30e6e082a53374dc8c07089c5f3"
 
 [[package]]
 name = "either"
