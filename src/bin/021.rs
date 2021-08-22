@@ -18,10 +18,10 @@ fn main() {
 }
 
 fn combination(n: usize, r: usize) -> usize {
-    if n == 0 {
+    if n < r {
         0
     } else {
-        let numerator: usize = (r..=n).product();
+        let numerator: usize = ((n - r + 1)..=n).product();
         let denominator: usize = (1..=r).product();
         numerator / denominator
     }
