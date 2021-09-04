@@ -26,8 +26,16 @@ fn main() {
                 break;
             }
         }
-        // show_maze(&stack);
+        show_maze(&stack);
     });
+}
+
+fn show_maze(maze: &[Vec<bool>]) {
+    maze.iter().for_each(|line| {
+        let line_str: String = line.iter().map(|&b| if b { '#' } else { '.' }).collect();
+        println!("{}", line_str);
+    });
+    println!("{}", (0..maze[0].len()).map(|_| '-').collect::<String>());
 }
 
 fn compress(lr: Vec<(usize, usize)>) -> (Vec<(usize, usize)>, usize) {
