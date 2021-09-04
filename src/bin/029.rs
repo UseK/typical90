@@ -1,22 +1,22 @@
-use competitive_tools_rust::d;
+// use competitive_tools_rust::d;
 use competitive_tools_rust::io::*;
 
 fn main() {
     let (_w, n): (usize, usize) = parse_tuple2();
     let lr: Vec<(usize, usize)> = (0..n).map(|_| parse_tuple2()).collect();
     let (compressed_lr, compressed_w) = compress(lr);
-    d!(compressed_lr);
+    // d!(compressed_lr);
 
     let (lr, w) = (compressed_lr, compressed_w);
-    d!(w, compressed_w);
+    // d!(w, compressed_w);
 
     let mut stack: Vec<Vec<bool>> = vec![vec![true; w], vec![false; w]];
     lr.into_iter().for_each(|(l, r)| {
         for h in (1..stack.len()).rev() {
-            let is_vacant = stack[h][l - 1..r].iter().all(|&x| !x);
-            let can_put = stack[h - 1][l - 1..r].iter().any(|&x| x);
+            let is_vacant = stack[h][l..=r].iter().all(|&x| !x);
+            let can_put = stack[h - 1][l..=r].iter().any(|&x| x);
             if is_vacant && can_put {
-                for i in l - 1..r {
+                for i in l..=r {
                     stack[h][i] = true;
                 }
                 if h == stack.len() - 1 {
@@ -26,17 +26,17 @@ fn main() {
                 break;
             }
         }
-        show_maze(&stack);
+        // show_maze(&stack);
     });
 }
 
-fn show_maze(maze: &[Vec<bool>]) {
-    maze.iter().for_each(|line| {
-        let line_str: String = line.iter().map(|&b| if b { '#' } else { '.' }).collect();
-        println!("{}", line_str);
-    });
-    println!("{}", (0..maze[0].len()).map(|_| '-').collect::<String>());
-}
+// fn show_maze(maze: &[Vec<bool>]) {
+//     maze.iter().for_each(|line| {
+//         let line_str: String = line.iter().map(|&b| if b { '#' } else { '.' }).collect();
+//         println!("{}", line_str);
+//     });
+//     println!("{}", (0..maze[0].len()).map(|_| '-').collect::<String>());
+// }
 
 fn compress(lr: Vec<(usize, usize)>) -> (Vec<(usize, usize)>, usize) {
     let values: Vec<usize> = lr.iter().fold(vec![], |mut acc, (l, r)| {
