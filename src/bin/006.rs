@@ -10,13 +10,11 @@ fn main() {
     (0..n).for_each(|i| {
         seg.update(i, (cs[i], i));
     });
-    // println!("{:?}", seg.tree);
 
     let mut left = 0;
     let answer: String = (n - k + 1..=n)
         .map(|right| {
-            let ans = seg.query(left, right);
-            // println!("{:?}", ans);
+            let ans = seg.query(left..right);
             left = ans.1 + 1;
             ans.0
         })

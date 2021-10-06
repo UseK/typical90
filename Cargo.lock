@@ -2,8 +2,8 @@
 # It is not intended for manual editing.
 [[package]]
 name = "competitive-tools-rust"
-version = "0.6.0"
-source = "git+https://github.com/UseK/competitive-tools-rust.git#efdad7eddfcecda864b5927bda26ead5a8539e98"
+version = "0.6.1"
+source = "git+https://github.com/UseK/competitive-tools-rust.git#a7d7f8e7066d4f28e8c00ecae02e290a9dac1306"
 dependencies = [
  "itertools",
 ]
