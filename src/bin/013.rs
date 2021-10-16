@@ -3,21 +3,19 @@ use competitive_tools_rust::io::*;
 
 fn main() {
     let (n, m): (usize, usize) = parse_tuple2();
-    let mut edges_list: Vec<Vec<Edge>> = vec![vec![]; n];
-    (0..m).for_each(|_| {
-        let (a, b, c): (usize, usize, usize) = parse_tuple3();
-        edges_list[a - 1].push(Edge { cost: c, to: b - 1 });
-        edges_list[b - 1].push(Edge { cost: c, to: a - 1 });
-    });
-    // edges_list.iter().for_each(|item| println!("{:?}", item));
-    let dijkstra_from_start = dijkstra(0, n, &edges_list);
-    // println!("{:?}", dijkstra_from_start);
-    let dijkstra_from_end = dijkstra(n - 1, n, &edges_list);
-    // println!("{:?}", dijkstra_from_end);
+    let mut edges_list = vec![vec![]; n];
+    for _ in 0..m {
+        let (a, b, cost): (usize, usize, usize) = parse_tuple3();
+        edges_list[a - 1].push(Edge { to: b - 1, cost });
+        edges_list[b - 1].push(Edge { to: a - 1, cost });
+    }
+    let from_start = dijkstra(0, n, &edges_list);
+    // from_start.iter().for_each(|item| println!("{:?}", item));
+    // println!();
 
-    dijkstra_from_start
-        .into_iter()
-        .flatten()
-        .zip(dijkstra_from_end.into_iter().flatten())
-        .for_each(|(a, b)| println!("{}", a + b));
+    let from_goal = dijkstra(n - 1, n, &edges_list);
+    // from_goal.iter().for_each(|item| println!("{:?}", item));
+    from_start.iter().zip(&from_goal).for_each(|(x, y)| {
+        println!("{}", x.unwrap() + y.unwrap());
+    })
 }
