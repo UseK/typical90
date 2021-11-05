@@ -1,4 +1,4 @@
-use competitive_tools_rust::d;
+use competitive_tools_rust::{math::ModDiv};
 use competitive_tools_rust::io::parse_tuple2;
 
 const LAW: usize = 1_000_000_007;
@@ -23,15 +23,7 @@ fn arithmetic_progression_1(left: usize, right: usize) -> usize {
     // d!(left, right);
     let a_raw = left + right;
     let b_raw = right - left + 1;
-    if a_raw % 2 == 0 {
-        let a = (a_raw / 2) % LAW;
-        let b = b_raw % LAW;
-        (a * b) % LAW
-    } else {
-        let a = a_raw % LAW;
-        let b = (b_raw / 2) % LAW;
-        (a * b) % LAW
-    }
+    a_raw.mod_div(2, LAW) * (b_raw % LAW) % LAW
 }
 
 #[allow(dead_code)]
