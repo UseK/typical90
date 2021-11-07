@@ -1,5 +1,5 @@
-use competitive_tools_rust::{math::ModDiv};
 use competitive_tools_rust::io::parse_tuple2;
+use competitive_tools_rust::math::ModDiv;
 
 const LAW: usize = 1_000_000_007;
 
