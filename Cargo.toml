@@ -8,7 +8,7 @@ edition = "2018"
 [dependencies]
 # proconio = "*"
 # competitive = { git = "https://github.com/tanakh/competitive-rs.git" }
-competitive-tools-rust = { git = "https://github.com/UseK/competitive-tools-rust.git", version = "0.7"}
+competitive-tools-rust = { git = "https://github.com/UseK/competitive-tools-rust.git", version = "0.8"}
 itertools = "0"
 
 [profile.release]
