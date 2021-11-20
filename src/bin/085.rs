@@ -1,8 +1,8 @@
-use competitive_tools_rust::{io::parse_line};
+use competitive_tools_rust::{io::parse_line, math::Divisors};
 
 fn main() {
     let k: usize = parse_line();
-    let dvs = divisors(k);
+    let dvs = k.divisors();
     // d!(dvs);
     let mut ans = 0;
     for i in 0..dvs.len(){
@@ -19,17 +19,4 @@ fn main() {
         }
     }
     println!("{}", ans);
-}
-
-fn divisors(n: usize) -> Vec<usize> {
-    let mut dvs = vec![];
-    for i in 1..=n {
-        if i * i > n { break }
-        if n % i == 0 {
-            dvs.push(i);
-            if i * i != n { dvs.push(n / i)}
-        }
-    }
-    dvs.sort_unstable();
-    dvs
 }
