@@ -1,33 +1,29 @@
-use competitive_tools_rust::bitset::Bitset as _;
-//use competitive_tools_rust::d;
+use competitive_tools_rust::bitset::Bitset;
 use competitive_tools_rust::io::*;
 
 fn main() {
-    let n: u32 = parse_line();
-    for i in 1..2_usize.pow(n - 1) {
-        let bits: Vec<bool> = i.to_bit_vec(n as usize).into_iter().rev().collect();
-        if is_correct(&bits) {
-            //d!(i);
-            //d!(bits);
-            let parentheses: String = bits
+    let n: usize = parse_line();
+    (0..2usize.pow(n as u32)).for_each(|i| {
+        let bits: Vec<bool> = i.to_bit_vec(n).into_iter().rev().collect();
+        // d!(i, bits, is_same_count(&bits), is_all_close(&bits));
+        if is_valid(&bits) {
+            let s: String = bits
                 .into_iter()
-                .map(|bit| if !bit { '(' } else { ')' })
+                .map(|bit| if bit { ')' } else { '(' })
                 .collect();
-            println!("{}", parentheses);
+            println!("{}", s);
         }
-    }
+    })
 }
 
-fn is_correct(bits: &[bool]) -> bool {
-    let mut false_count = 0;
-    for &bit in bits {
-        if !bit {
-            false_count += 1;
-        } else if false_count == 0 {
-            return false;
+fn is_valid(bits: &[bool]) -> bool {
+    let mut count_open = 0;
+    bits.iter().all(|&bit| {
+        if bit {
+            count_open -= 1;
         } else {
-            false_count -= 1;
+            count_open += 1;
         }
-    }
-    false_count == 0
+        count_open >= 0
+    }) && count_open == 0
 }
