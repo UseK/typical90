@@ -2,7 +2,7 @@ use competitive_tools_rust::io::parse_tuple2;
 
 fn main() {
     let (n, k): (usize, usize) = parse_tuple2();
-    let ab: Vec<(usize, usize)> = (0..n).map(|_| parse_tuple2::<usize>()).collect();
+    let ab: Vec<(usize, usize)> = (0..n).map(|_| parse_tuple2::<usize, usize>()).collect();
     // println!("{:?}", ab);
     let mut scores = ab.iter().fold(vec![], |mut acc, ab_item| {
         acc.push(ab_item.1);

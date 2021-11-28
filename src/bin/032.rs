@@ -6,7 +6,7 @@ fn main() {
     let n: usize = parse_line();
     let a: Vec<Vec<usize>> = (0..n).map(|_| parse_values(n)).collect();
     let m: usize = parse_line();
-    let xy: Vec<(usize, usize)> = (0..m).map(|_| parse_tuple2::<usize>()).collect();
+    let xy: Vec<(usize, usize)> = (0..m).map(|_| parse_tuple2::<usize, usize>()).collect();
     let mut ng_matrix = vec![vec![false; n]; n];
     for (x, y) in xy {
         ng_matrix[x - 1][y - 1] = true;
