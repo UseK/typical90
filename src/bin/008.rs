@@ -1,37 +1,35 @@
 use competitive_tools_rust::io::*;
+// use competitive_tools_rust::d;
 
-const ATCODER: [char; 7] = ['a', 't', 'c', 'o', 'd', 'e', 'r'];
-const LAW: usize = 1_000_000_007;
+const ATODER_LEN: usize = 7;
+const ATCODER: [char; ATODER_LEN] = ['a', 't', 'c', 'o', 'd', 'e', 'r'];
+const MOD: usize = 1_000_000_007;
 
 fn main() {
     let n: usize = parse_line();
+    let mut dp: Vec<Vec<usize>> = vec![vec![0; n]; ATODER_LEN];
     let s: Vec<char> = parse_line::<String>().chars().collect();
-    //println!("{:?}", s);
-    let mut dp = [
-        vec![0; n],
-        vec![0; n],
-        vec![0; n],
-        vec![0; n],
-        vec![0; n],
-        vec![0; n],
-        vec![0; n],
-    ];
-    let mut current = 0;
-    for i in 0..n {
+    // dp.iter().for_each(|item| println!("{:?}", item));
+    // d!(s);
+    (0..n).fold(0, |mut acc, i| {
         if s[i] == ATCODER[0] {
-            current += 1;
+            acc += 1;
         }
-        dp[0][i] = current;
-    }
-    for i in 1..7 {
-        for j in 1..n {
-            dp[i][j] = if s[j] == ATCODER[i] {
-                (dp[i][j - 1] + dp[i - 1][j - 1]) % LAW
+        dp[0][i] = acc;
+        acc
+    });
+    // dp.iter().for_each(|item| println!("{:?}", item));
+    // println!();
+
+    (1..ATODER_LEN).for_each(|i| {
+        (i..n).for_each(|j| {
+            dp[i][j] = (dp[i][j - 1] + if s[j] == ATCODER[i] {
+                dp[i - 1][j - 1]
             } else {
-                dp[i][j - 1] % LAW
-            }
-        }
-    }
-    //dp.iter().for_each(|item| println!("{:?}", item));
-    println!("{}", dp[6][n - 1]);
-}
+                0
+            }) % MOD;
+        });
+    });
+    // dp.iter().for_each(|item| println!("{:?}", item));
+    println!("{}", dp[ATODER_LEN - 1][n - 1]);
+} 

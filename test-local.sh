@@ -1,4 +1,4 @@
-cargo build --release --bin "$1"
+cargo build --bin "$1"
 # cargo build --bin "$1"
 # shellcheck disable=SC2038
 # find "./testcase/$1/in/" -type f -name "*.txt"
