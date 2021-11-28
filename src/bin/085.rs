@@ -5,15 +5,21 @@ fn main() {
     let dvs = k.divisors();
     // d!(dvs);
     let mut ans = 0;
-    for i in 0..dvs.len(){
+    for i in 0..dvs.len() {
         for j in i..dvs.len() {
             let a = dvs[i];
             let b = dvs[j];
             // d!(a, b);
-            if k / a < b { continue };
-            if k % (a * b) != 0 { continue };
+            if k / a < b {
+                continue;
+            };
+            if k % (a * b) != 0 {
+                continue;
+            };
             let c = k / (a * b);
-            if c < b { continue };
+            if c < b {
+                continue;
+            };
             // d!(a, b, c);
             ans += 1;
         }

@@ -23,13 +23,15 @@ fn main() {
 
     (1..ATODER_LEN).for_each(|i| {
         (i..n).for_each(|j| {
-            dp[i][j] = (dp[i][j - 1] + if s[j] == ATCODER[i] {
-                dp[i - 1][j - 1]
-            } else {
-                0
-            }) % MOD;
+            dp[i][j] = (dp[i][j - 1]
+                + if s[j] == ATCODER[i] {
+                    dp[i - 1][j - 1]
+                } else {
+                    0
+                })
+                % MOD;
         });
     });
     // dp.iter().for_each(|item| println!("{:?}", item));
     println!("{}", dp[ATODER_LEN - 1][n - 1]);
-} 
+}
