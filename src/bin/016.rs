@@ -1,29 +1,32 @@
-use competitive_tools_rust::io::*;
-
-const MAX_COUNT: usize = 9999;
+use competitive_tools_rust::io::{parse_line, parse_values};
 
 fn main() {
     let n: usize = parse_line();
-    let mut coins: Vec<usize> = parse_values(3);
-    coins.sort_unstable();
+    let mut vs: Vec<usize> = parse_values(3);
+    vs.sort_unstable();
+    let (low, mid, high) = (vs[0], vs[1], vs[2]);
 
-    let less = coins[0];
-    let mid = coins[1];
-    let bigger = coins[2];
+    if n % high == 0 {
+        println!("{}", n / high);
+        return;
+    }
 
-    let mut ans = MAX_COUNT;
-    for bigger_count in 0..=MAX_COUNT {
-        if bigger_count * bigger > n {
-            break;
+    let mut ans = 9999;
+
+    for n_high in 0..=(n / high).min(9999) {
+        let remain_high = n - n_high * high;
+        // d!(n_high, remain_high);
+        if remain_high % mid == 0 {
+            // println!("{}", n_high + remain_high / mid);
+            ans = ans.min(n_high + remain_high / mid);
         }
-        let remain_1 = n - bigger * bigger_count;
-        for mid_count in 0..=MAX_COUNT {
-            if mid_count * mid > remain_1 {
-                break;
-            }
-            let remain_2 = remain_1 - mid * mid_count;
-            if remain_2 % less == 0 {
-                ans = ans.min(bigger_count + mid_count + remain_2 / less);
+        for n_mid in 0..=(remain_high / mid).min(9999) {
+            let remain_mid = remain_high - n_mid * mid;
+            // d!(n_mid, remain_mid);
+            if remain_mid % low == 0 {
+                // d!(n_high, n_mid, remain_mid / low);
+                // println!("{}", n_high + n_mid + remain_mid / low);
+                ans = ans.min(n_high + n_mid + remain_mid / low);
             }
         }
     }
